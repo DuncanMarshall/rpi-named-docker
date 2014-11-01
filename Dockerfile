@@ -19,10 +19,10 @@ RUN mv /etc/bind /etc/bind.orig
 RUN mv /var/lib/bind /var/lib/bind.orig
 
 # Define working directory.
-WORKDIR /opt/dns-server
+WORKDIR /opt/named
 
 # Add files to the container.
-ADD . /opt/dns-server
+ADD . /opt/named
 
 # Define volumes.
 VOLUME ["/etc/bind", "/var/lib/bind", "/var/run/named"]
