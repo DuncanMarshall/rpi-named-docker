@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Install packages.
 RUN apt-get update
 RUN apt-get -y upgrade
-RUN apt-get install -y bind9 curl dnsutils iputils nano wget
+RUN apt-get install -y bind9 curl dnsutils iproute nano wget
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
