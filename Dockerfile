@@ -15,7 +15,6 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Move the existing configuration and data directories out of the way
 RUN mv /etc/bind /etc/bind.orig
-RUN mv /var/lib/bind /var/lib/bind.orig
 
 # Define working directory.
 WORKDIR /opt/named
