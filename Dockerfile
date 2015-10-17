@@ -1,17 +1,16 @@
-FROM resin/rpi-raspbian:latest
+FROM hypriot/rpi-alpine-scratch:latest
 
 MAINTAINER marc.lennox@gmail.com
 
-# Set environment.
-ENV DEBIAN_FRONTEND noninteractive
+# Set environment variables.
+ENV \
+  TERM=xterm-color
 
 # Install packages.
-RUN apt-get update
-RUN apt-get -y upgrade
-RUN apt-get install -y bind9 curl dnsutils iproute nano wget
-
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apk update && \
+    apk upgrade && \
+    apk add bash bind nano wget && \
+    rm -rf /var/cache/apk/*
 
 # Move the existing configuration and data directories out of the way
 RUN mv /etc/bind /etc/bind.orig
@@ -20,7 +19,7 @@ RUN mv /etc/bind /etc/bind.orig
 WORKDIR /opt/named
 
 # Add files to the container.
-ADD . /opt/named
+COPY entrypoint.sh /docker-entrypoint
 
 # Define volumes.
 VOLUME ["/etc/bind", "/var/lib/bind", "/var/run/named"]
@@ -30,7 +29,7 @@ EXPOSE 53
 EXPOSE 53/udp
 
 # Define entrypoint.
-ENTRYPOINT ["./entrypoint"]
+ENTRYPOINT ["/docker-entrypoint"]
 
 # Define command
-CMD ["/usr/sbin/named", "-u", "bind", "-g"]
+CMD ["/usr/sbin/named", "-g"]
