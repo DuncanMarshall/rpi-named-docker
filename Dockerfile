@@ -15,9 +15,6 @@ RUN apk update && \
 # Move the existing configuration and data directories out of the way
 RUN mv /etc/bind /etc/bind.orig
 
-# Define working directory.
-WORKDIR /opt/named
-
 # Add files to the container.
 COPY entrypoint.sh /docker-entrypoint
 
