@@ -7,9 +7,7 @@ ENV \
   TERM=xterm-color
 
 # Install packages.
-RUN apk update && \
-    apk upgrade && \
-    apk add bash bind nano wget && \
+RUN apk --update add bash bind nano wget && \
     rm -rf /var/cache/apk/*
 
 # Move the existing configuration and data directories out of the way
